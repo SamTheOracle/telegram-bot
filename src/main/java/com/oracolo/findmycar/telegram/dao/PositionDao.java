@@ -14,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.oracolo.findmycar.telegram.entities.Position;
+import com.oracolo.findmycar.telegram.entities.Position_;
 import com.oracolo.findmycar.telegram.entities.selectmappings.PositionVehicle;
 
 @ApplicationScoped
@@ -23,8 +24,8 @@ public class PositionDao extends BaseDao<Position> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Position> positionCriteriaQuery = cb.createQuery(Position.class);
 		Root<Position> root = positionCriteriaQuery.from(Position.class);
-		Order descendingOrder = cb.desc(root.get("timeStamp"));
-		Predicate vehicleIdPredicate = cb.equal(root.get("vehicleId"), vehicleId);
+		Order descendingOrder = cb.desc(root.get(Position_.timeStamp));
+		Predicate vehicleIdPredicate = cb.equal(root.get(Position_.vehicleId), vehicleId);
 		positionCriteriaQuery.where(vehicleIdPredicate).orderBy(descendingOrder);
 		TypedQuery<Position> query = em.createQuery(positionCriteriaQuery);
 		query.setMaxResults(1);
@@ -35,8 +36,8 @@ public class PositionDao extends BaseDao<Position> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Position> positionCriteriaQuery = cb.createQuery(Position.class);
 		Root<Position> root = positionCriteriaQuery.from(Position.class);
-		Predicate userIdPredicate = cb.equal(root.get("userId"), userId);
-		positionCriteriaQuery.distinct(true).multiselect(root.get("vehicleId"), root.get("vehicleName")).where(userIdPredicate);
+		Predicate userIdPredicate = cb.equal(root.get(Position_.userId), userId);
+		positionCriteriaQuery.distinct(true).multiselect(root.get(Position_.vehicleId), root.get(Position_.vehicleName)).where(userIdPredicate);
 		TypedQuery<Position> query = em.createQuery(positionCriteriaQuery);
 		return query.getResultStream().map(position -> new PositionVehicle(position.getVehicleId(), position.getVehicleName())).collect(
 				Collectors.toUnmodifiableList());

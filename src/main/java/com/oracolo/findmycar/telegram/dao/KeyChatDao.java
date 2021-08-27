@@ -14,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.oracolo.findmycar.telegram.entities.KeyChat;
+import com.oracolo.findmycar.telegram.entities.KeyChat_;
 import com.oracolo.findmycar.telegram.entities.Position;
 import com.oracolo.findmycar.telegram.entities.selectmappings.PositionVehicle;
 
@@ -24,7 +25,7 @@ public class KeyChatDao extends BaseDao<KeyChat> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<KeyChat> cq = cb.createQuery(KeyChat.class);
 		Root<KeyChat> root = cq.from(KeyChat.class);
-		cq.where(root.get("uniqueKeyValue").in(uniqueKeyValues));
+		cq.where(root.get(KeyChat_.uniqueKeyValue).in(uniqueKeyValues));
 		return em.createQuery(cq).getResultStream().collect(Collectors.toList());
 	}
 
