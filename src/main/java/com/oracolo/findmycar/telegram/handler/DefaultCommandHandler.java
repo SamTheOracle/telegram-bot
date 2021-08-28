@@ -21,9 +21,6 @@ public class DefaultCommandHandler implements TelegramCommandHandler {
 	private static final String DEFAULT_MESSAGE = "Non ho capito quello che hai detto. Prova ad utilizzare i comandi:\n1) /position\n2) /start";
 
 	@Inject
-	PositionService positionService;
-
-	@Inject
 	TelegramService telegramService;
 
 	@Inject

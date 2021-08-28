@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.eclipse.microprofile.context.ManagedExecutor;
 
@@ -29,6 +30,7 @@ public class PositionCallbackHandler implements TelegramCallbackHandler {
 	}
 
 	@Override
+	@Transactional
 	public CompletableFuture<Void> handleCallback(JsonObject message) {
 		JsonObject callbackQuery = message.getJsonObject("callback_query");
 		JsonObject chat = callbackQuery.getJsonObject("message").getJsonObject("chat");

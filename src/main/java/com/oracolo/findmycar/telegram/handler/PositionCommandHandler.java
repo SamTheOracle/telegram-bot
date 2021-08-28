@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.eclipse.microprofile.context.ManagedExecutor;
 import org.slf4j.Logger;
@@ -36,6 +37,7 @@ public class PositionCommandHandler implements TelegramCommandHandler {
 	}
 
 	@Override
+	@Transactional
 	public CompletableFuture<Void> handle(JsonObject message) {
 		JsonObject chat = message.getJsonObject("message").getJsonObject("chat");
 		Integer chatId = chat.getInteger("id");
